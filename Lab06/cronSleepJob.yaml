@@ -1,0 +1,22 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cron-sleeep-job
+  namespace: default
+spec:
+  concurrencyPolicy: Allow
+  schedule: '*/2 * * * *'
+  jobTemplate:
+    metadata:
+      name: sleeep-job
+    spec:
+      template:
+        spec:
+          containers:
+          - image: busybox
+            imagePullPolicy: Always
+            name: cron-sleeep-job
+            command: ["sleep", "300"]
+          restartPolicy: OnFailure
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
