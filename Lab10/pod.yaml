@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpd
+  namespace: default
+spec:
+  restartPolicy: Never
+  volumes:
+  - name: vol
+    persistentVolumeClaim:
+      claimName: httpd-pv-claim
+  containers:
+  - name: httpd-container
+    image: httpd:lates
+    volumeMounts:
+    - name: vol
+      mountPath: /var/www/http
